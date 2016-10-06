@@ -73,10 +73,10 @@
             <li class="fragment">Staging</li>
             <li class="fragment">Comitting</li>
 			<li class="fragment">Pushing and Pulling</li>
+            <li class="fragment">Tagging</li>
 			<li class="fragment">Branching</li>
 			<li class="fragment">Merging</li>
             <li class="fragment">Rebasing</li>
-			<li class="fragment">Tagging</li>
 			<li class="fragment">Changelists</li>
 			<li class="fragment">Collaborating on a single file</li>
 			<li class="fragment">Integration with development environments like Jetbrain</li>
@@ -125,6 +125,145 @@ Unpacking objects: 100% (10/10), done.
 			<p class="fragment">Click Clone </p>
 		</section>
 	</section>
+    <section>
+        <section>
+            <h2>Tracking</h2>
+            <p class="fragment">
+                Each file in your working directory can be in on of two states, tracked and untracked files. Tracked files are files
+                that appear in your last snapshot. Untracked files are files in your working directory that do appear in your last
+                snapshot. You must use the git add command to begin tracking a file. You can use the status command to see which file
+                is in which state.
+            </p>
+        </section>
+        <section>
+            <p>
+                In order to begin tracking a new file, you use the command git add. To begin tracking the README file, you can run this:
+            </p>
+            <pre>
+				<code data-trim contenteditable>
+$ git add README
+				</code>
+			</pre>
+            <p>
+                If you run your status command again, you can see that your README file is now tracked and staged to be committed:
+            </p>
+            <pre>
+				<code data-trim contenteditable>
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD file..." to unstage)
+
+    new file:   README
+				</code>
+			</pre>
+        </section>
+    </section>
+    <section>
+        <section>
+            <h2>
+                Staging
+            </h2>
+            <p class="fragment">
+                If you modify a file after if has been tracked and check the status of, you will see the file name appear under the heading
+                "Changes not staged for commit:" to stage this file, you must run the add command. Once this has been done your file will
+                be added to the next commit. You can stage a file, make changes after staging and the file at the point it was staged
+                will go into the commit and the modifications will not. You will have to run the add command again to stage the latest
+                version.
+            </p>
+        </section>
+        <section>
+            <p>
+                Staging a file and checking the status
+            </p>
+            <pre>
+                <code data-trim contenteditable>
+                    $ git add CONTRIBUTING.md
+    $ git status
+    On branch master
+    Your branch is up-to-date with 'origin/master'.
+    Changes to be committed:
+      (use "git reset HEAD file..." to unstage)
+
+        new file:   README
+        modified:   CONTRIBUTING.md
+                </code>
+            </pre>
+            <p>
+                Both files are staged and will go into your next commit
+            </p>
+        </section>
+        <section>
+            <p>
+                At this point, suppose you remember one little change that you want to make in CONTRIBUTING.md before you commit it.
+                You open it again and make that change, and you’re ready to commit. However, let’s run git status one more time:
+            </p>
+            <pre>
+                <code data data-trim contenteditable>
+                    $ vim CONTRIBUTING.md
+    $ git status
+    On branch master
+    Your branch is up-to-date with 'origin/master'.
+    Changes to be committed:
+      (use "git reset HEAD file..." to unstage)
+
+        new file:   README
+        modified:   CONTRIBUTING.md
+
+    Changes not staged for commit:
+      (use "git add file..." to update what will be committed)
+      (use "git checkout -- file..." to discard changes in working directory)
+
+        modified:   CONTRIBUTING.md
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>
+                What the heck? Now CONTRIBUTING.md is listed as both staged and unstaged. How is that possible?
+                It turns out that Git stages a file exactly as it is when you run the git add command. If you commit
+                now, the version of CONTRIBUTING.md as it was when you last ran the git add command is how it will
+                go into the commit, not the version of the file as it looks in your working directory when you run git
+                commit. If you modify a file after you run git add, you have to run git add again to stage the latest
+                version of the file:
+            </p>
+            <pre>
+                <code data-trim  contenteditable>
+                    $ git add CONTRIBUTING.md
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD file..." to unstage)
+
+    new file:   README
+    modified:   CONTRIBUTING.md
+                </code>
+            </pre>
+        </section>
+    </section>
+    <section>
+        <h2>
+            Commiting
+        </h2>
+        <p >
+            Once all changes have been staged, you can now commit these changes. All files that have not had the add command on
+            will not be committed.
+        </p>
+        <p >
+            You can commit all tracked files by skipping the staging process by running the commit tracked files command.
+        </p>
+        <pre>
+            <code data-trim contenteditable>
+                $ git commit -m "Story 182: Fix benchmarks for speed"
+[master 463dc4f] Story 182: Fix benchmarks for speed
+ 2 files changed, 2 insertions(+)
+ create mode 100644 README
+            </code>
+        </pre>
+    </section>
+
 	<section>
 		<section>
 			<h2>
@@ -183,6 +322,181 @@ You can fix this by running git fetch github; git merge github/master and then p
 				</code>
 			</pre>
             <p class="fragment">If push is rejected due to lack of synchronization, update the local branch</p>
+        </section>
+    </section>
+    <section>
+        <section>
+            <h2>
+                Tagging
+            </h2>
+            <p class="fragment">
+                You are able to tag a specific point in history. These are used to mark release points or whatever
+                you might like to use them for. To see the tags listed in a project, simply run the list tag command.
+            </p>
+            <p class="fragment">
+                There are two main types of tags: lightweight and annotated. Lightweight tags are a pointer to a specific commit. Annotated tags are
+                stored as full objects in the GIT database, they contain more information about who created the tag.
+                To create tags use the lightweight and annotated commands, depending on which tag you wanting to create.
+                You are able to tag commits after you have moved past them. To do this, use the tag previous commit tag.
+            </p>
+        </section>
+        <section>
+            <h2>Creating and Listing tags</h2>
+            <pre>
+                <code data-trim contenteditable>
+$ git tag -a v1.4 -m "my version 1.4"
+$ git tag
+v0.1
+v1.3
+v1.4
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h2>Showing details of an annotated tag</h2>
+            <pre>
+                <code data-trim contenteditable>
+                    $ git show v1.4
+tag v1.4
+Tagger: Ben Straub ben@straub.cc
+Date:   Sat May 3 20:19:12 2014 -0700
+
+my version 1.4
+
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon schacon@gee-mail.com
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+                </code>
+            </pre>
+
+        </section>
+    </section>
+    <section>
+        <section>
+            <h2>Branching</h2>
+            <p class="fragment">
+                Branching means you diverge from the main line of development and continue to do work without
+                messing with the main line. To create a new branch you run the branch command.
+            </p>
+
+            <p class="fragment">
+                GIT stores it's data as a series of snapshots, with a pointer pointing to a snapshot you are currently working on.
+            </p>
+            <p class="fragment">
+                When a branch is created and changes are made, depending on which file you are making changes to the pointer will
+                move forward to a newly created version of the project for that specific branch.
+            </p>
+            <p class="fragment">
+                If no changes are made to any other branch, no new versions are created of that branch and when you want to
+                go to that branch the pointer will point back to the snapshot of the point you checked out to switch branches.
+            </p>
+        </section>
+        <section>
+            <p>
+                Without arguments, git branch will list out the local branches that you have. The branch that you are currently
+                working on will have a star next to it and if you have coloring turned on, will show the current branch in green.
+            </p>
+            <pre>
+                <code data-text contenteditable>
+$ git branch
+* master
+  testing
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>
+               git branch (branchname) create a new branch
+            </p>
+
+            <pre>
+                <code data-text contenteditable>
+$ git branch testing
+
+$ git branch
+* master
+  testing
+                </code>
+            </pre>
+        </section>
+    <section>
+        <p>
+            Switching Branches
+        </p>
+        <pre>
+            <code data-text contenteditable>
+$ git checkout testing
+Switched to branch 'testing'
+            </code>
+        </pre>
+    </section>
+    <section>
+        <p>
+            git branch -v see the last commit on each branch
+        </p>
+        <pre>
+            <code data-text contenteditable>
+$ git branch -v
+* master      54b417d fix javascript issue
+  development 74c111d modify component.json file
+  testing     62a557a update test scripts
+            </code>
+        </pre>
+    </section>
+    <section>
+        <p>
+            If we want to delete a branch, we can run git branch -d (branch) to remove it.
+        </p>
+        <pre>
+            <code data-text contenteditable>
+$ git branch
+* master
+  testing
+
+$ git branch -d testing
+Deleted branch testing (was 78b2670).
+
+$ git branch
+* master
+            </code>
+        </pre>
+    </section>
+</section>
+    <section>
+        <section>
+            <h2>
+                Merging
+            </h2>
+        </section>
+    </section>
+    <section>
+        <section>
+            <h2>
+                Rebasing
+            </h2>
+        </section>
+    </section>
+    <section>
+        <section>
+            <h2>
+                Changelists
+            </h2>
+        </section>
+    </section>
+    <section>
+        <section>
+            <h2>
+                Integration with development environments like Jetbrain
+            </h2>
+        </section>
+    </section>
+    <section>
+        <section>
+            <h2>
+                Integration with YouTrack
+            </h2>
         </section>
     </section>
 
