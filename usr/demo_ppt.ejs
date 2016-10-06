@@ -78,9 +78,6 @@
 			<li class="fragment">Merging</li>
             <li class="fragment">Rebasing</li>
 			<li class="fragment">Changelists</li>
-			<li class="fragment">Collaborating on a single file</li>
-			<li class="fragment">Integration with development environments like Jetbrain</li>
-			<li class="fragment">Integration with YouTrack</li>
 		</ol>
 	</section>
 	<section>
@@ -95,7 +92,7 @@
 			<p class="fragment">
 				If you need to collaborate with someone on a project, or if you want to get a copy
 				of a project so you can look at it or use the code, you will clone it. You simply run
-				the <code>git clone [url]</code> command with the URL of the project you want to copy.
+				the <code>git clone</code> command with the URL of the project you want to copy.
 			</p>
         </section>
 		<section>
@@ -130,7 +127,7 @@ Unpacking objects: 100% (10/10), done.
             <h2>Tracking</h2>
             <p class="fragment">
                 Each file in your working directory can be in on of two states, tracked and untracked files. Tracked files are files
-                that appear in your last snapshot. Untracked files are files in your working directory that do appear in your last
+                that appear in your last snapshot. Untracked files are files in your working directory that don't appear in your last
                 snapshot. You must use the git add command to begin tracking a file. You can use the status command to see which file
                 is in which state.
             </p>
@@ -166,11 +163,11 @@ Changes to be committed:
                 Staging
             </h2>
             <p class="fragment">
-                If you modify a file after if has been tracked and check the status of, you will see the file name appear under the heading
+                If you modify a file after it has been tracked and check the status of, you will see the file name appear under the heading
                 "Changes not staged for commit:" to stage this file, you must run the add command. Once this has been done your file will
                 be added to the next commit. You can stage a file, make changes after staging and the file at the point it was staged
-                will go into the commit and the modifications will not. You will have to run the add command again to stage the latest
-                version.
+                will go into the commit and the last modifications will not. You will have to run the add command again to include all
+                changes to the commit..
             </p>
         </section>
         <section>
@@ -220,7 +217,7 @@ Changes to be committed:
             </pre>
         </section>
         <section>
-            <p>
+            <p style="font-size: 30px;">
                 What the heck? Now CONTRIBUTING.md is listed as both staged and unstaged. How is that possible?
                 It turns out that Git stages a file exactly as it is when you run the git add command. If you commit
                 now, the version of CONTRIBUTING.md as it was when you last ran the git add command is how it will
@@ -334,7 +331,7 @@ You can fix this by running git fetch github; git merge github/master and then p
                 you might like to use them for. To see the tags listed in a project, simply run the list tag command.
             </p>
             <p class="fragment">
-                There are two main types of tags: lightweight and annotated. Lightweight tags are a pointer to a specific commit. Annotated tags are
+                There are two main types of tags: lightweight and annotated. A lightweight tag is a pointer to a specific commit. Annotated tags are
                 stored as full objects in the GIT database, they contain more information about who created the tag.
                 To create tags use the lightweight and annotated commands, depending on which tag you wanting to create.
                 You are able to tag commits after you have moved past them. To do this, use the tag previous commit tag.
@@ -374,21 +371,21 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
         </section>
     </section>
     <section>
-        <section>
+        <section >
             <h2>Branching</h2>
-            <p class="fragment">
+            <p class="fragment" style="font-size: 30px;">
                 Branching means you diverge from the main line of development and continue to do work without
                 messing with the main line. To create a new branch you run the branch command.
             </p>
 
-            <p class="fragment">
+            <p class="fragment" style="font-size: 30px;">
                 GIT stores it's data as a series of snapshots, with a pointer pointing to a snapshot you are currently working on.
             </p>
-            <p class="fragment">
+            <p class="fragment" style="font-size: 30px;">
                 When a branch is created and changes are made, depending on which file you are making changes to the pointer will
                 move forward to a newly created version of the project for that specific branch.
             </p>
-            <p class="fragment">
+            <p class="fragment" style="font-size: 30px;">
                 If no changes are made to any other branch, no new versions are created of that branch and when you want to
                 go to that branch the pointer will point back to the snapshot of the point you checked out to switch branches.
             </p>
@@ -469,6 +466,73 @@ $ git branch
             <h2>
                 Merging
             </h2>
+            <p>
+                When your work is complete and you want to incorporate this branch into your master do the following:
+            </p>
+            <p>
+                First check out the branch you want to merge into. You then use git merge with the branch name that you want to merge in.
+            </p>
+        </section>
+        <section>
+            <h2>
+                Pre-merge checks
+            </h2>
+            <ul>
+                <li>Commit locally</li>
+                <li>If all named commits are already ancestors of HEAD, git merge will exit early
+                    with the message "Already up-to-date."</li>
+                <li>To avoid recording unrelated changes in the merge commit, git pull and git merge
+                    will also abort if there are any changes registered in the index relative to the HEAD commit. </li>
+            </ul>
+        </section>
+        <section>
+            <h2>
+                Fast Forward merge
+            </h2>
+            <p>
+                When you try to merge one commit with a commit that can be reached by following the first commit’s history,
+                Git simplifies things by moving the pointer forward because there is no divergent work to merge together –
+                this is called a “fast-forward.”
+            </p>
+            <pre>
+                <code data-text contenteditable>
+$ git checkout master
+$ git merge hotfix
+Updating f42c576..3a0874c
+Fast-forward
+ index.html | 2 ++
+ 1 file changed, 2 insertions(+)
+                </code>
+            </pre>
+        </section>
+        <section>
+            <a class="test" href="http://cornify.com">
+                <img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
+            </a>
+        </section>
+        <section>
+            <h2>
+                Three-way merge
+            </h2>
+            <p>
+                This occurs when a branch has diverged from the master. GIT uses three commits to generate the merge commit.
+                The two branch tip and their common ancestor.
+            </p>
+            <pre>
+                <code data text contenteditable>
+$ git checkout master
+Switched to branch 'master'
+$ git merge iss53
+Merge made by the 'recursive' strategy.
+index.html |    1 +
+1 file changed, 1 insertion(+)
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h2>
+                Merge conflicts
+            </h2>
         </section>
     </section>
     <section>
@@ -476,6 +540,16 @@ $ git branch
             <h2>
                 Rebasing
             </h2>
+            <p>
+                The primary reason for rebasing is to maintain a linear project history. This method can be used instead
+                of a 3-way merge. So if the master branch has progressed since you started working on a feature, you can
+                rebase your feature and merge the two.
+            </p>
+            <pre>
+                <code data-text contenteditable>
+
+                </code>
+            </pre>
         </section>
     </section>
     <section>
@@ -483,13 +557,11 @@ $ git branch
             <h2>
                 Changelists
             </h2>
-        </section>
-    </section>
-    <section>
-        <section>
-            <h2>
-                Integration with development environments like Jetbrain
-            </h2>
+            <p>
+                A changelist is a set of changes in files that represents a logical change in source code. The changes
+                specified in a changelist are not stored in the repository until committed (pushed). Any changes made
+                to the source files, are automatically included in the active changelist.
+            </p>
         </section>
     </section>
     <section>
