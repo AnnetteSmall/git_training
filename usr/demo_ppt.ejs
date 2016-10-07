@@ -1,34 +1,18 @@
-<div class="slides">
+<div class="slides" xmlns="http://www.w3.org/1999/html">
 	<section>
 		<section>
-		<h1>GIT</h1>
+            <img src="\img\atlassian-getting-git-right.jpg" alt="">
 		<p class="fragment" >The name "git" was given by Linus Torvalds when he wrote the very
 			first version. He described the tool as "the stupid content tracker"
 			and the name as (depending on your mood):</p>
 		</section>
 		<section>
-			<ul>
-				<li>
-					<p>random three-letter combination that is pronounceable, and not
-					actually used by any common UNIX command.  The fact that it is a
-					mispronunciation of "get" may or may not be relevant.
-					</p>
-				</li>
-				<li>
-					<p class="fragment">stupid. contemptible and despicable. simple. Take your pick from the
-				dictionary of slang.
-					</p>
-				</li>
-				<li>
-					<p class="fragment"><code>"global information tracker"</code>: you're in a good mood, and it actually
-				works for you. Angels sing, and a light suddenly fills the room.
-					</p>
-				</li>
-				<li>
-					<p class="fragment">"goddamn idiotic truckload of sh*t": when it breaks
-					</p>
-				</li>
-			</ul>
+			<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations"  style="font-size: 30px;">
+            <p>"A random three-letter combination that is pronounceable, and not actually used by any common UNIX command.  The fact that it is a mispronunciation of "get" may or may not be relevant.</p>
+            <p>Stupid. Contemptible and despicable. simple. Take your pick from the dictionary of slang.</p>
+            <p>"global information tracker"</code>: you're in a good mood, and it actually	works for you. Angels sing, and a light suddenly fills the room.</p>
+            <p>"goddamn idiotic truckload of sh*t": when it breaks" - Linus Torvalds</p>
+			</blockquote></p>
 		</section>
 	</section>
 
@@ -161,11 +145,9 @@ Changes to be committed:
             <h2>
                 Staging
             </h2>
-            <p class="fragment">
-                If you modify a file after it has been tracked and check the status of, you will see the file name appear under the heading
-                "Changes not staged for commit:" to stage this file, you must run the <code>git add</code> command. Once this has been done your file will
-                be added to the next commit.
-            </p>
+            <p>Once you've modify files in your working directory they need to be staged before you can commit. When
+                you commit a snpshot of these files are stored permanently to your Git directory.</p>
+            <img src="\img\Stages.png" alt="Stages">
         </section>
         <section>
             <p>
@@ -321,7 +303,10 @@ You can fix this by running git fetch github; git merge github/master and then p
             <h2>
                 Tagging
             </h2>
-            <p class="fragment">
+            <img height="300px" src="\img\tagging.jpg" alt="">
+        </section>
+        <section>
+            <p >
                 You are able to tag a specific point in history. These are used to mark release points or whatever
                 you might like to use them for. To see the tags listed in a project, simply run the list tag command.
             </p>
@@ -368,22 +353,23 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
     <section>
         <section>
             <h2>Branching</h2>
+            <img height="600" src="\img\kyle_-_branching_out.gif" alt="">
+        </section>
+        <section>
+            <h2>Branching</h2>
             <p class="fragment" style="font-size: 30px;">
                 Branching means you diverge from the main line of development and continue to do work without
                 messing with the main line. To create a new branch you run the branch command.
             </p>
 
-            <p class="fragment" >
+            <p class="fragment" style="font-size: 30px;">
                 GIT stores it's data as a series of snapshots, with a pointer pointing to a snapshot you are currently working on.
             </p>
             <p class="fragment" style="font-size: 30px;">
                 When a branch is created and changes are made, depending on which file you are making changes to the pointer will
                 move forward to a newly created version of the project for that specific branch.
             </p>
-            <p class="fragment" style="font-size: 30px;">
-                If no changes are made to any other branch, no new versions are created of that branch and when you want to
-                go to that branch the pointer will point back to the snapshot of the point you checked out to switch branches.
-            </p>
+            <img  class="fragment" width="500" height="200" src="\img\Branching Method.PNG" alt="">
         </section>
         <section>
             <p>
@@ -461,6 +447,9 @@ $ git branch
             <h2>
                 Merging
             </h2>
+            <img height="500" src="\img\mergb.jpg" alt="">
+        </section>
+        <section>
             <p>
                 When your work is complete and you want to incorporate this branch into your master do the following:
             </p>
@@ -484,21 +473,24 @@ $ git branch
             <h2>
                 Fast Forward merge
             </h2>
-            <p>
+            <img height="400px" width="400px" src="\img\Fast-forward merge.png" alt="">
+            <p style="font-size: 25px;">
                 When you try to merge one commit with a commit that can be reached by following the first commit’s history,
                 Git simplifies things by moving the pointer forward because there is no divergent work to merge together –
                 this is called a “fast-forward.”
             </p>
-            <pre>
-                <code data-trim data-noescape>
+        </section>
+        <section>
+                <pre>
+                    <code data-trim data-noescape>
 $ git checkout master
 $ git merge hotfix
 Updating f42c576..3a0874c
 Fast-forward
  index.html | 2 ++
  1 file changed, 2 insertions(+)
-                </code>
-            </pre>
+                    </code>
+                </pre>
         </section>
         <section>
             <h2>
@@ -510,6 +502,12 @@ Fast-forward
                 snapshot that results from this three-way merge and automatically creates a new commit that points
                 to it.
             </p>
+        </section>
+        <section>
+            <img height="500px" src="\img\3-way merge.PNG" alt="3wayMerge">
+        </section>
+        <section>
+
             <pre>
                 <code data text contenteditable>
 $ git checkout master
@@ -619,6 +617,11 @@ index.html
         </p>
     </section>
     <section>
+        <img height="220px" src="img\Rebase point 1.PNG" alt="">
+        <img height="220px" src="img\Rebase point 2.PNG" alt="">
+        <img height="220px" src="img\Rebase point 3.PNG" alt="">
+    </section>
+    <section>
         <h2>
             Changelists
         </h2>
@@ -651,16 +654,22 @@ index.html
             </ol>
         </section>
         <section>
+            <img src="\img\Gantt_Chart2.png" alt="Gantt_Chart">
+        </section>
+        <section>
             <h2>
                 Time Management
             </h2>
-            <p>
+            <p class="fragment">
                 Track the time spent working on an issue, iteration or the whole project, and compare it to the
                 original estimation
             </p>
-            <p>
+            <p class="fragment">
                 Create Time reports
             </p>
+        </section>
+        <section>
+            <img src="\img\Burndown_852.png" alt="Burndown">
         </section>
         <section>
             <h2>
@@ -669,6 +678,26 @@ index.html
             <p>
                 Search for issues by their attributes and keywords
             </p>
+        </section>
+        <section>
+            <h2>Completion & Highlighting</h2>
+            <img src="\img\completion_highlighting_@2x (1).png" alt="" >
+        </section>
+        <section>
+            <h2>Filters</h2>
+            <img src="\img\filters_@2x.png" alt="" >
+        </section>
+        <section>
+            <h2>Tags</h2>
+            <img src="\img\tags_@2x.png" alt="" >
+        </section>
+        <section>
+            <h2>Saved Searches</h2>
+            <img src="\img\saved_searches_@2x(3).png" alt="" >
+        </section>
+        <section>
+            <h2>Search Context</h2>
+            <img src="\img\search_context_@2x.png" alt="" >
         </section>
         <section>
             <h2>
@@ -686,14 +715,6 @@ index.html
             <p>
                 Correlate with VCS commits
             </p>
-        </section>
-        <section>
-            <a href="#/2" class="image">
-                <img width="178" height="238" src="Fast-forward merge.PNG" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-            </a>
-            <a href="#/2" class="image">
-                <img width="178" height="238" src="..\assets\img\Fast-forward merge.PNG" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-            </a>
         </section>
     </section>
 
